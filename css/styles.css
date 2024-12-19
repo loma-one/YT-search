@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 120px); /* Adjust this value based on the height of the header and footer */
+}
+
+.search-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    margin: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 300px;
+    text-decoration: none; /* Remove underline */
+    color: inherit;
+}
+
+.search-result a {
+    text-decoration: none; /* Remove underline for links */
+    color: inherit; /* Inherit the color from the parent element */
+}
+
+.search-result .thumbnail {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.search-result .title {
+    font-size: 1.2em; /* Increase the font size of the title */
+    margin-bottom: 5px;
+    color: black; /* Set the color of the title to black */
+}
+
+.search-result .description {
+    font-size: 0.9em; /* Decrease the font size of the description */
+    color: #555;
+    text-decoration: none; /* Remove underline */
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    margin-top: auto;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 50.25%; /* 16:9 */
+    height: 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border: none; /* Remove the border */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .search-result {
+        width: 100%;
+    }
+
+    .search-result .thumbnail {
+        width: 100%;
+    }
+}
