@@ -21,7 +21,7 @@ This project allows you to generate a preview of a YouTube video with an embedde
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/yourusername/your-repo.git
+   git clone https://github.com/loma-one/YT-search.git
    cd your-repo
 
 
