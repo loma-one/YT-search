@@ -11,16 +11,43 @@
 <body>
     <header>
         <h1>YouTube Link Preview</h1>
-    </header>
-    <main>
+        <div class="theme-switcher">
+            <label for="theme-switch">Dark Mode:</label>
+            <input type="checkbox" id="theme-switch" tabindex="0">
+            <span class="slider"></span>
+        </div>
         <form action="generate_preview.php" method="post">
             <label for="youtube_url">YouTube URL:</label>
             <input type="text" id="youtube_url" name="youtube_url" required>
             <button type="submit">Generate Preview</button>
         </form>
+    </header>
+    <main>
+        <!-- Main content goes here -->
     </main>
     <footer>
         <p>&copy; Mit ♥ erstellt | Fediserve.de | <a href="Datenschutzhinweis.html">Datenschutzhinweis</a></p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeSwitch = document.getElementById('theme-switch');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                themeSwitch.checked = currentTheme === 'dark';
+            }
+
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

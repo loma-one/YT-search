@@ -10,6 +10,7 @@ This project allows you to generate a preview of a YouTube video with an embedde
 - Allow users to set their own YouTube API key.
 - Search for videos and display the results in a responsive list.
 - Automatically load more videos when the end of the page is reached.
+- Include a favicon for better branding.
 
 ## Prerequisites
 
@@ -20,7 +21,7 @@ This project allows you to generate a preview of a YouTube video with an embedde
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/loma-one/YT-search.git
+   git clone https://github.com/yourusername/your-repo.git
    cd your-repo
 
 

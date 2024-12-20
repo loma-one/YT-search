@@ -10,9 +10,14 @@
 </head>
 <body>
     <header>
-        <h1>YouTube Video Search</h1><p>
+        <h1>YouTube Video Search</h1>
+        <div class="theme-switcher">
+            <label for="theme-switch">Dark Mode:</label>
+            <input type="checkbox" id="theme-switch" tabindex="0">
+            <span class="slider"></span>
+        </div>
         <form id="search-form">
-            <label for="search_query">Search Video:</label>
+            <label for="search_query">Search Query:</label>
             <input type="text" id="search_query" name="search_query" required>
             <button type="submit">Search</button>
         </form>
@@ -24,5 +29,26 @@
         <p>&copy; Mit ♥ erstellt | Fediserve.de | <a href="Datenschutzhinweis.html">Datenschutzhinweis</a></p>
     </footer>
     <script src="js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeSwitch = document.getElementById('theme-switch');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                themeSwitch.checked = currentTheme === 'dark';
+            }
+
+            themeSwitch.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
