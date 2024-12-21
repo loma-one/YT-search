@@ -33,7 +33,7 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
         foreach ($data['items'] as $item) {
             $video_id = $item['id']['videoId'];
             $title = $item['snippet']['title'];
-            $thumbnail = $item['snippet']['thumbnails']['medium']['url'];
+            $thumbnail = $item['snippet']['thumbnails']['high']['url']; // Use high resolution thumbnail
             $description = $item['snippet']['description'];
 
             // Generate a unique ID for the preview link
@@ -57,14 +57,16 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
                 <meta property='og:video' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:secure_url' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:type' content='text/html'>
-                <meta property='og:video:width' content='560'>
-                <meta property='og:video:height' content='315'>
+                <meta property='og:video:width' content='640'>
+                <meta property='og:video:height' content='480'>
                 <link rel='icon' href='$base_url/image/favicon.ico' />
                 <link rel='apple-touch-icon' href='$base_url/image/favicon.ico' />
                 <style>
                     body {
                         font-family: Arial, sans-serif;
                         margin: 20px;
+                        background-color: var(--background-color); /* Use the CSS variable for background color */
+                        color: var(--text-color); /* Use the CSS variable for text color */
                     }
                     .video-container {
                         position: relative;
@@ -78,14 +80,25 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
                         width: 100%;
                         height: 100%;
                     }
+                    .thumbnail {
+                        display: none; /* Hide the thumbnail from human viewers */
+                    }
+                    .title {
+                        font-size: 1.5em;
+                        margin-bottom: 10px;
+                    }
+                    .description {
+                        font-size: 1em;
+                    }
                 </style>
             </head>
             <body>
                 <div class='video-container'>
                     <iframe src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
                 </div>
-                <h2>$title</h2>
-                <p>$description</p>
+                <img src='$thumbnail' alt='$title' class='thumbnail'>
+                <h2 class='title'>$title</h2>
+                <p class='description'>$description</p>
             </body>
             </html>";
 
