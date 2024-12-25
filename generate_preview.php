@@ -78,7 +78,7 @@ if (isset($_POST['youtube_url'])) {
                     }
                     .video-container {
                         position: relative;
-                        padding-bottom: 56.25%; /* 16:9 */
+                        padding-bottom: 50.25%; /* 16:9 */
                         height: 0;
                     }
                     .video-container iframe {
