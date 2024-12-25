@@ -57,14 +57,15 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
                 <meta property='og:video' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:secure_url' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:type' content='text/html'>
-                <meta property='og:video:width' content='640'>
-                <meta property='og:video:height' content='480'>
+                <meta property='og:video:width' content='1280'>
+                <meta property='og:video:height' content='960'>
                 <link rel='icon' href='$base_url/image/favicon.ico' />
                 <link rel='apple-touch-icon' href='$base_url/image/favicon.ico' />
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        margin: 20px;
+                        margin: 0;
+                        padding: 0;
                         background-color: var(--background-color); /* Use the CSS variable for background color */
                         color: var(--text-color); /* Use the CSS variable for text color */
                     }
