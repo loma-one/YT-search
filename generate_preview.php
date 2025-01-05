@@ -40,7 +40,8 @@ if (isset($_POST['youtube_url'])) {
 
         if (isset($data['items'][0])) {
             $title = $data['items'][0]['snippet']['title'];
-            $thumbnail = $data['items'][0]['snippet']['thumbnails']['high']['url']; // Use high resolution thumbnail
+            $thumbnail_high = $data['items'][0]['snippet']['thumbnails']['high']['url']; // Use high resolution thumbnail for the search results
+            $thumbnail_sddefault = isset($data['items'][0]['snippet']['thumbnails']['sddefault']) ? $data['items'][0]['snippet']['thumbnails']['sddefault']['url'] : $data['items'][0]['snippet']['thumbnails']['high']['url']; // Use sddefault resolution thumbnail for the preview, fallback to high if sddefault is not available
             $description = $data['items'][0]['snippet']['description'];
 
             // Generate a unique ID for the preview link
@@ -58,14 +59,16 @@ if (isset($_POST['youtube_url'])) {
                 <title>$title</title>
                 <meta property='og:title' content='$title'>
                 <meta property='og:description' content='$description'>
-                <meta property='og:image' content='$thumbnail'>
+                <meta property='og:image' content='$thumbnail_sddefault'>
+                <meta property='og:image:width' content='1200'> <!-- Bildbreite hinzufügen -->
+                <meta property='og:image:height' content='630'> <!-- Bildhöhe hinzufügen -->
                 <meta property='og:url' content='$preview_link'>
                 <meta property='og:type' content='video.other'>
                 <meta property='og:video' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:secure_url' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:type' content='text/html'>
                 <meta property='og:video:width' content='1280'>
-                <meta property='og:video:height' content='960'>
+                <meta property='og:video:height' content='720'>
                 <link rel='icon' href='$base_url/image/favicon.ico' />
                 <link rel='apple-touch-icon' href='$base_url/image/favicon.ico' />
                 <style>
@@ -104,7 +107,7 @@ if (isset($_POST['youtube_url'])) {
                 <div class='video-container'>
                     <iframe src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
                 </div>
-                <img src='$thumbnail' alt='$title' class='thumbnail'>
+                <img src='$thumbnail_sddefault' alt='$title' class='thumbnail'>
                 <h2 class='title'>$title</h2>
                 <p class='description'>$description</p>
             </body>

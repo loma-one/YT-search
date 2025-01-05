@@ -8,7 +8,7 @@ $server_ip = file_get_contents('https://api.ipify.org');
 if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
     $search_query = urlencode($_GET['search_query']);
     $pageToken = $_GET['pageToken'];
-    $maxResults = 50; // Set the maximum number of results to 50
+    $maxResults = 30; // Set the maximum number of results to 30
 
     // Use YouTube Data API to search for videos
     $api_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=$search_query&key=$api_key&type=video&maxResults=$maxResults&pageToken=$pageToken";
@@ -33,7 +33,8 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
         foreach ($data['items'] as $item) {
             $video_id = $item['id']['videoId'];
             $title = $item['snippet']['title'];
-            $thumbnail = $item['snippet']['thumbnails']['high']['url']; // Use high resolution thumbnail
+            $thumbnail_high = $item['snippet']['thumbnails']['high']['url']; // Use high resolution thumbnail for the search results
+            $thumbnail_sddefault = isset($item['snippet']['thumbnails']['sddefault']) ? $item['snippet']['thumbnails']['sddefault']['url'] : $item['snippet']['thumbnails']['high']['url']; // Use sddefault resolution thumbnail for the preview, fallback to high if sddefault is not available
             $description = $item['snippet']['description'];
 
             // Generate a unique ID for the preview link
@@ -51,14 +52,16 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
                 <title>$title</title>
                 <meta property='og:title' content='$title'>
                 <meta property='og:description' content='$description'>
-                <meta property='og:image' content='$thumbnail'>
+                <meta property='og:image' content='$thumbnail_sddefault'>
+                <meta property='og:image:width' content='1200'> <!-- Bildbreite hinzufügen -->
+                <meta property='og:image:height' content='630'> <!-- Bildhöhe hinzufügen -->
                 <meta property='og:url' content='$preview_link'>
                 <meta property='og:type' content='video.other'>
                 <meta property='og:video' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:secure_url' content='https://www.youtube.com/embed/$video_id'>
                 <meta property='og:video:type' content='text/html'>
                 <meta property='og:video:width' content='1280'>
-                <meta property='og:video:height' content='960'>
+                <meta property='og:video:height' content='720'>
                 <link rel='icon' href='$base_url/image/favicon.ico' />
                 <link rel='apple-touch-icon' href='$base_url/image/favicon.ico' />
                 <style>
@@ -97,7 +100,7 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
                 <div class='video-container'>
                     <iframe src='https://www.youtube.com/embed/$video_id' frameborder='0' allowfullscreen></iframe>
                 </div>
-                <img src='$thumbnail' alt='$title' class='thumbnail'>
+                <img src='$thumbnail_sddefault' alt='$title' class='thumbnail'>
                 <h2 class='title'>$title</h2>
                 <p class='description'>$description</p>
             </body>
@@ -110,7 +113,7 @@ if (isset($_GET['search_query']) && isset($_GET['pageToken'])) {
             echo "
             <div class='search-result'>
                 <a href='$preview_link' target='_blank'>
-                    <img src='$thumbnail' alt='$title' class='thumbnail'>
+                    <img src='$thumbnail_high' alt='$title' class='thumbnail'>
                     <div class='title'>$title</div>
                     <div class='description'>$description</div>
                 </a>
