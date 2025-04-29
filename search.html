@@ -3,26 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Video Search</title>
+    <title>YouTube Search</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="image/favicon.ico" />
     <link rel="apple-touch-icon" href="image/favicon.ico" />
+    <style>
+        .theme-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .theme-switcher label {
+            margin-right: 10px;
+        }
+        .results-header {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        header h1 {
+            margin-bottom: 20px; /* Vergrößerter Abstand zwischen dem Titel und dem Suchformular */
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>YouTube Video Search</h1>
+        <h1><a href="search.html" style="text-decoration: none; color: inherit;">YouTube Search</a></h1>
         <div class="theme-switcher">
             <label for="theme-switch">Dark Mode:</label>
             <input type="checkbox" id="theme-switch" tabindex="0">
             <span class="slider"></span>
         </div>
         <form id="search-form">
-            <label for="search_query">Search Video:</label>
+            <label for="search_query">Search:</label>
             <input type="text" id="search_query" name="search_query" required>
             <button type="submit">Search</button>
         </form>
     </header>
     <main>
+        <div id="results-header" class="results-header">Angesagt</div>
         <div id="search-results" class="search-results"></div>
     </main>
     <footer>
@@ -48,6 +68,42 @@
                     localStorage.setItem('theme', 'light');
                 }
             });
+
+            // Fetch trending videos when the page loads
+            fetchTrendingVideos();
+        });
+
+        function fetchTrendingVideos() {
+            const cachedData = localStorage.getItem('trendingVideos');
+            const lastFetchTime = localStorage.getItem('lastFetchTime');
+            const now = new Date().getTime();
+
+            if (cachedData && lastFetchTime && (now - lastFetchTime) < 15 * 60 * 1000) {
+                document.getElementById('search-results').innerHTML = cachedData;
+                document.getElementById('results-header').textContent = 'Angesagt';
+            } else {
+                fetch('search_videos.php?trending=true')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('search-results').innerHTML = data;
+                        document.getElementById('results-header').textContent = 'Angesagt';
+                        localStorage.setItem('trendingVideos', data);
+                        localStorage.setItem('lastFetchTime', now);
+                    })
+                    .catch(error => console.error('Error fetching trending videos:', error));
+            }
+        }
+
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('search_query').value;
+            fetch(`search_videos.php?search_query=${encodeURIComponent(searchQuery)}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('search-results').innerHTML = data;
+                    document.getElementById('results-header').textContent = 'Trefferliste';
+                })
+                .catch(error => console.error('Error fetching search results:', error));
         });
     </script>
 </body>
